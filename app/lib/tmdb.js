@@ -9,31 +9,41 @@ const options = {
   next: { revalidate: 3600 },
 };
 
+async function safeFetch(url, opts) {
+  try {
+    const res = await fetch(url, opts);
+    if (!res.ok) {
+      console.error(`TMDB request failed: ${url} — status ${res.status}`);
+      return null;
+    }
+    return await res.json();
+  } catch (err) {
+    console.error(`TMDB request errored: ${url}`, err);
+    return null;
+  }
+}
+
 export async function fetchTrending() {
-  const res = await fetch(`${BASE_URL}/trending/movie/week`, options);
-  const data = await res.json();
-  return data.results;
+  const data = await safeFetch(`${BASE_URL}/trending/movie/week`, options);
+  return data?.results || [];
 }
 
 export async function fetchNowPlaying() {
-  const res = await fetch(`${BASE_URL}/movie/now_playing`, options);
-  const data = await res.json();
-  return data.results;
+  const data = await safeFetch(`${BASE_URL}/movie/now_playing`, options);
+  return data?.results || [];
 }
 
 export async function fetchUpcoming() {
-  const res = await fetch(
+  const data = await safeFetch(
     `${BASE_URL}/movie/upcoming?region=GB&language=en-US`,
     options,
   );
-  const data = await res.json();
-  return data.results;
+  return data?.results || [];
 }
 
 export async function fetchTopRated() {
-  const res = await fetch(`${BASE_URL}/movie/top_rated`, options);
-  const data = await res.json();
-  return data.results;
+  const data = await safeFetch(`${BASE_URL}/movie/top_rated`, options);
+  return data?.results || [];
 }
 
 export function getImageUrl(path, size = "w780") {
@@ -41,74 +51,73 @@ export function getImageUrl(path, size = "w780") {
 }
 
 export async function fetchThrillers() {
-  const res = await fetch(
+  const data = await safeFetch(
     `${BASE_URL}/discover/movie?with_genres=53&sort_by=popularity.desc`,
     options,
   );
-  const data = await res.json();
-  return data.results;
+  return data?.results || [];
 }
 
 export async function fetchMovieTrailer(movieId) {
-  const res = await fetch(`${BASE_URL}/movie/${movieId}/videos`, options);
-  const data = await res.json();
+  const data = await safeFetch(`${BASE_URL}/movie/${movieId}/videos`, options);
   return (
-    data.results.find((v) => v.type === "Trailer" && v.site === "YouTube") ||
+    data?.results?.find((v) => v.type === "Trailer" && v.site === "YouTube") ||
     null
   );
 }
 
 export async function searchMovie(query) {
-  const res = await fetch(
+  const data = await safeFetch(
     `${BASE_URL}/search/movie?query=${encodeURIComponent(query)}`,
     options,
   );
-  const data = await res.json();
-  return data.results[0];
+  return data?.results?.[0] || null;
 }
 
 export async function searchTV(query) {
-  const res = await fetch(
+  const data = await safeFetch(
     `${BASE_URL}/search/tv?query=${encodeURIComponent(query)}`,
     options,
   );
-  const data = await res.json();
-  return data.results[0];
+  return data?.results?.[0] || null;
 }
 
 export async function fetchTVTrailer(seriesId) {
-  const res = await fetch(`${BASE_URL}/tv/${seriesId}/videos`, options);
-  const data = await res.json();
+  const data = await safeFetch(`${BASE_URL}/tv/${seriesId}/videos`, options);
   return (
-    data.results.find((v) => v.type === "Trailer" && v.site === "YouTube") ||
+    data?.results?.find((v) => v.type === "Trailer" && v.site === "YouTube") ||
     null
   );
 }
 
 export async function searchMulti(query) {
   if (!query.trim()) return [];
-  const res = await fetch(
+  const data = await safeFetch(
     `${BASE_URL}/search/multi?query=${encodeURIComponent(query)}&include_adult=false`,
     options,
   );
-  const data = await res.json();
-  return data.results.filter(
-    (r) => (r.media_type === "movie" || r.media_type === "tv") && r.poster_path,
+  return (
+    data?.results?.filter(
+      (r) =>
+        (r.media_type === "movie" || r.media_type === "tv") && r.poster_path,
+    ) || []
   );
 }
 
 export async function fetchMovieDetails(id) {
-  const res = await fetch(
-    `${BASE_URL}/movie/${id}?append_to_response=credits,videos,recommendations`,
-    options,
+  return (
+    (await safeFetch(
+      `${BASE_URL}/movie/${id}?append_to_response=credits,videos,recommendations`,
+      options,
+    )) || null
   );
-  return res.json();
 }
 
 export async function fetchTVDetails(id) {
-  const res = await fetch(
-    `${BASE_URL}/tv/${id}?append_to_response=credits,videos,recommendations`,
-    options,
+  return (
+    (await safeFetch(
+      `${BASE_URL}/tv/${id}?append_to_response=credits,videos,recommendations`,
+      options,
+    )) || null
   );
-  return res.json();
 }
