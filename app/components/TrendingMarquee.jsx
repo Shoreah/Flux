@@ -12,7 +12,8 @@ const SPEED = 34;
 function getScale() {
   if (typeof window === "undefined") return 1;
   const w = window.innerWidth;
-  if (w < 640) return 0.55;
+  if (w < 400) return 0.4;
+  if (w < 640) return 0.48;
   if (w < 1024) return 0.78;
   return 1;
 }
@@ -93,6 +94,10 @@ export default function TrendingMarquee({ movies }) {
 
   const goToDetails = (id) => {
     router.push(`/details/movie/${id}`);
+  };
+
+  const goToTrending = () => {
+    router.push("/trending");
   };
 
   return (
@@ -216,7 +221,8 @@ export default function TrendingMarquee({ movies }) {
       <div className="relative flex items-center justify-center px-4 sm:px-6 md:px-10 py-6 sm:py-8">
         <button
           type="button"
-          className="bg-[#C026D3] hover:bg-[#a21caf] text-white text-xs sm:text-sm font-semibold px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-colors"
+          onClick={goToTrending}
+          className="cursor-pointer bg-[#C026D3] hover:bg-[#a21caf] text-white text-xs sm:text-sm font-semibold px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-colors"
         >
           Browse All Movies
         </button>

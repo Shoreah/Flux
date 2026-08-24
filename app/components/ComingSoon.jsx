@@ -15,7 +15,7 @@ export default function ComingSoon({ movies }) {
 
   if (!movies || movies.length === 0) {
     return (
-      <div className="flex flex-col lg:flex-row mx-auto mb-18 px-10 pb-10 pt-6 gap-6">
+      <div className="flex flex-col lg:flex-row mx-auto mb-18 px-4 sm:px-6 lg:px-10 pb-10 pt-6 gap-6">
         <div className="bg-[#1f1f1f] w-full h-[400px] rounded-xl animate-pulse border border-white/5" />
         <div className="bg-[#1f1f1f] w-full h-[400px] rounded-xl animate-pulse border border-white/5" />
       </div>
@@ -38,17 +38,17 @@ export default function ComingSoon({ movies }) {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row mx-auto mb-18 px-10 pb-10 pt-6 gap-6">
+    <div className="flex flex-col lg:flex-row mx-auto mb-18 px-4 sm:px-6 lg:px-10 pb-10 pt-6 gap-6">
       <div
         onClick={() => goToDetails(main)}
-        className="bg-[#1f1f1f] w-full lg:w-1/2 rounded-xl p-5 hover:shadow-[0_0_30px_rgba(192,38,211,0.15)] cursor-pointer transition duration-300 border border-white/5 flex flex-row lg:flex-col gap-4"
+        className="bg-[#1f1f1f] w-full lg:w-1/2 rounded-xl p-5 hover:shadow-[0_0_30px_rgba(192,38,211,0.15)] cursor-pointer transition duration-300 border border-white/5 flex flex-col gap-4"
       >
-        <div className="relative w-1/2 lg:w-full shrink-0">
+        <div className="relative w-full shrink-0">
           <motion.img
             layoutId={mounted ? `poster-movie-${main.id}` : undefined}
             src={getImageUrl(main.backdrop_path, "w1280")}
             alt={main.title}
-            className="w-full h-full lg:h-[350px] object-cover rounded-lg"
+            className="w-full h-[200px] sm:h-[260px] lg:h-[350px] object-cover rounded-lg"
           />
           {main.release_date && (
             <span className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full">
@@ -56,7 +56,7 @@ export default function ComingSoon({ movies }) {
             </span>
           )}
         </div>
-        <div className="flex flex-col justify-center gap-2 w-1/2 lg:w-full">
+        <div className="flex flex-col justify-center gap-2 w-full">
           <span className="text-xs text-[#C026D3] font-bold tracking-widest uppercase">
             Coming This Month
           </span>
@@ -78,14 +78,14 @@ export default function ComingSoon({ movies }) {
 
       <div
         onClick={() => goToDetails(second)}
-        className="bg-[#1f1f1f] w-full lg:w-1/2 rounded-xl p-5 hover:shadow-[0_0_30px_rgba(192,38,211,0.15)] cursor-pointer transition duration-300 border border-white/5 flex flex-row lg:flex-col gap-4"
+        className="bg-[#1f1f1f] w-full lg:w-1/2 rounded-xl p-5 hover:shadow-[0_0_30px_rgba(192,38,211,0.15)] cursor-pointer transition duration-300 border border-white/5 flex flex-col gap-4"
       >
-        <div className="relative w-1/2 lg:w-full shrink-0">
+        <div className="relative w-full shrink-0">
           <motion.img
             layoutId={mounted ? `poster-movie-${second.id}` : undefined}
             src={getImageUrl(second.backdrop_path, "w1280")}
             alt={second.title}
-            className="w-full h-full lg:h-[350px] object-cover rounded-lg"
+            className="w-full h-[200px] sm:h-[260px] lg:h-[350px] object-cover rounded-lg"
           />
           {second.release_date && (
             <span className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full">
@@ -93,7 +93,7 @@ export default function ComingSoon({ movies }) {
             </span>
           )}
         </div>
-        <div className="flex flex-col justify-center gap-2 w-1/2 lg:w-full">
+        <div className="flex flex-col justify-center gap-2 w-full">
           <span className="bg-[#C026D3]/20 border border-[#C026D3] text-[#C026D3] rounded-full w-fit px-3 py-0.5 text-xs font-bold tracking-wide">
             MOST ANTICIPATED
           </span>
