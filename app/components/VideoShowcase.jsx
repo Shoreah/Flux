@@ -1,30 +1,32 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowRight, Play, Pause } from "lucide-react";
 
 const PANELS = [
   {
-    title: "Personalised Recommendations",
+    title: "Every Genre, Every Era",
     description:
-      "Our AI learns what you love and serves up titles you'll actually want to watch — no endless scrolling required.",
+      "Shonen, seinen, slice-of-life, classics from the 90s to this season's newest drops — it's all here, organized and ready to binge.",
     src: "/videos/Yuta.mp4",
   },
   {
     title: "Stream in HD & 4K",
     description:
-      "Crystal clear picture quality on every device. Whether it's your TV, laptop, or phone — Flux looks stunning everywhere.",
+      "Crisp animation deserves a crisp picture. Every frame, every fight scene, every detail — looking exactly as sharp as it should on any screen.",
     src: "/videos/120.mp4",
   },
   {
-    title: "New Titles Every Week",
+    title: "New Episodes Weekly",
     description:
-      "Fresh drops every Friday. From blockbuster releases to hidden indie gems — there's always something new waiting for you.",
+      "Simulcasts and fresh episodes added on schedule. No spoilers, no waiting around — just caught up, every week.",
     src: "/videos/rengoku.mp4",
   },
 ];
 
 export default function VideoShowcase() {
+  const router = useRouter();
   const [active, setActive] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const videoRefs = useRef([]);
@@ -54,6 +56,10 @@ export default function VideoShowcase() {
       current.pause();
     }
   }, [isPlaying]);
+
+  const goToAnime = () => {
+    router.push("/anime");
+  };
 
   return (
     <div className="mx-auto w-full max-w-[1220px] p-4 font-sans sm:p-6">
@@ -138,8 +144,11 @@ export default function VideoShowcase() {
       </div>
 
       <div className="my-8 flex justify-center sm:my-10">
-        <button className="group mb-3 flex cursor-pointer items-center gap-0 rounded-full bg-[#C026D3] px-8 py-3 font-semibold text-white transition-all duration-300 hover:gap-2 hover:scale-105 hover:bg-[#a21caf] sm:px-12 sm:py-3.5 md:px-15 md:py-4">
-          Start Watching
+        <button
+          onClick={goToAnime}
+          className="group mb-3 flex cursor-pointer items-center gap-0 rounded-full bg-[#C026D3] px-8 py-3 font-semibold text-white transition-all duration-300 hover:gap-2 hover:scale-105 hover:bg-[#a21caf] sm:px-12 sm:py-3.5 md:px-15 md:py-4"
+        >
+          Browse Anime
           <ArrowRight
             size={18}
             className="w-0 -translate-x-2 opacity-0 transition-all duration-300 group-hover:w-[18px] group-hover:translate-x-0 group-hover:opacity-100"

@@ -125,3 +125,59 @@ export async function fetchTVDetails(id) {
     )) || null
   );
 }
+
+export async function fetchPopularAnime() {
+  const data = await safeFetch(
+    `${BASE_URL}/discover/tv?with_genres=16&with_origin_country=JP&sort_by=popularity.desc`,
+    options,
+  );
+  return data?.results?.map((r) => ({ ...r, media_type: "tv" })) || [];
+}
+
+export async function fetchTopRatedAnime() {
+  const data = await safeFetch(
+    `${BASE_URL}/discover/tv?with_genres=16&with_origin_country=JP&sort_by=vote_average.desc&vote_count.gte=200`,
+    options,
+  );
+  return data?.results?.map((r) => ({ ...r, media_type: "tv" })) || [];
+}
+
+export async function fetchAiringAnime() {
+  const data = await safeFetch(
+    `${BASE_URL}/discover/tv?with_genres=16&with_origin_country=JP&air_date.lte=${new Date().toISOString().split("T")[0]}&sort_by=first_air_date.desc`,
+    options,
+  );
+  return data?.results?.map((r) => ({ ...r, media_type: "tv" })) || [];
+}
+
+export async function fetchAnimeMovies() {
+  const data = await safeFetch(
+    `${BASE_URL}/discover/movie?with_genres=16&with_original_language=ja&sort_by=popularity.desc`,
+    options,
+  );
+  return data?.results?.map((r) => ({ ...r, media_type: "movie" })) || [];
+}
+
+const ANIME_CATEGORY_QUERIES = {
+  "top-rated": (page) =>
+    `${BASE_URL}/discover/tv?with_genres=16&with_origin_country=JP&sort_by=vote_average.desc&vote_count.gte=200&page=${page}`,
+  movies: (page) =>
+    `${BASE_URL}/discover/movie?with_genres=16&with_original_language=ja&sort_by=popularity.desc&page=${page}`,
+  popular: (page) =>
+    `${BASE_URL}/discover/tv?with_genres=16&with_origin_country=JP&sort_by=popularity.desc&page=${page}`,
+  "now-airing": (page) =>
+    `${BASE_URL}/discover/tv?with_genres=16&with_origin_country=JP&air_date.lte=${new Date().toISOString().split("T")[0]}&sort_by=first_air_date.desc&page=${page}`,
+};
+
+export async function fetchAnimeCategory(category, page = 1) {
+  const buildUrl = ANIME_CATEGORY_QUERIES[category];
+  if (!buildUrl) return { results: [], totalPages: 0 };
+
+  const data = await safeFetch(buildUrl(page), options);
+  const mediaType = category === "movies" ? "movie" : "tv";
+
+  return {
+    results: data?.results?.map((r) => ({ ...r, media_type: mediaType })) || [],
+    totalPages: data?.total_pages || 0,
+  };
+}

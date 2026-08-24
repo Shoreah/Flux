@@ -10,8 +10,8 @@ import { Menu, X } from "lucide-react";
 const links = [
   { label: "Movies", id: "movies" },
   { label: "TV Shows", id: "tv-shows" },
+  { label: "Anime", id: "anime" },
   { label: "Trending", id: "trending" },
-  { label: "Why Flux", id: "why-flux" },
 ];
 
 export default function Navbar() {

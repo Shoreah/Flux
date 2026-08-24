@@ -32,7 +32,7 @@ export default function FloatingHeader() {
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
         }`}
       >
-        Everything you need to enjoy cinema
+        For the ones who finish the season in a weekend
       </h1>
     </div>
   );

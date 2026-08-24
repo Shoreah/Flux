@@ -23,7 +23,9 @@ export default function Home() {
         <ThreePages />
       </div>
       <FloatingHeader />
-      <VideoShowcase />
+      <div id="anime">
+        <VideoShowcase />
+      </div>
       <div id="trending">
         <TemplateGallery />
       </div>
@@ -32,9 +34,7 @@ export default function Home() {
       <div id="tv-shows">
         <VideoCarousel />
       </div>
-      <div id="why-flux">
-        <FiveBoxes />
-      </div>
+      <FiveBoxes />
       <Marquee />
       <Footer />
     </HomeShell>
