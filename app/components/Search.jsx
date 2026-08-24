@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { getImageUrl } from "../lib/tmdb.js";
 
 export default function Search() {
@@ -176,7 +177,10 @@ export default function Search() {
         )}
       </div>
 
-      <div className="group flex justify-center md:justify-evenly items-center gap-2 hover:bg-[#2a2a2a] hover:cursor-pointer rounded-xl w-full md:w-[250px] h-16 md:h-20 p-3 transition-all duration-300 flex-shrink-0">
+      <Link
+        href="/trending"
+        className="group flex justify-center md:justify-evenly items-center gap-2 hover:bg-[#2a2a2a] hover:cursor-pointer rounded-xl w-full md:w-[250px] h-16 md:h-20 p-3 transition-all duration-300 flex-shrink-0"
+      >
         <p className="text-2xl">🔥</p>
         <div>
           <p className="font-semibold text-white group-hover:text-[#C026D3] transition-colors duration-300">
@@ -184,7 +188,7 @@ export default function Search() {
           </p>
           <p className="text-sm text-gray-400">Updated daily on Flux</p>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

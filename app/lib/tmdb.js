@@ -24,7 +24,7 @@ async function safeFetch(url, opts) {
 }
 
 export async function fetchTrending() {
-  const data = await safeFetch(`${BASE_URL}/trending/movie/week`, options);
+  const data = await safeFetch(`${BASE_URL}/trending/all/week`, options);
   return data?.results || [];
 }
 
