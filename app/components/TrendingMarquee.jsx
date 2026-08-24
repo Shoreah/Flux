@@ -29,11 +29,12 @@ export default function TrendingMarquee({ movies }) {
 
   const [isPaused, setIsPaused] = useState(false);
   const [hoveredKey, setHoveredKey] = useState(null);
-  const [scale, setScale] = useState(getScale);
+  const [scale, setScale] = useState(1);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    setScale(getScale());
   }, []);
 
   useEffect(() => {
