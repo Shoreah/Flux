@@ -25,7 +25,11 @@ async function safeFetch(url, opts) {
 
 export async function fetchTrending() {
   const data = await safeFetch(`${BASE_URL}/trending/all/week`, options);
-  return data?.results || [];
+  return (
+    data?.results?.filter(
+      (r) => r.media_type === "movie" || r.media_type === "tv",
+    ) || []
+  );
 }
 
 export async function fetchNowPlaying() {
